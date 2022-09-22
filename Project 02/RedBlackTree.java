@@ -1,10 +1,9 @@
 // --== CS400 File Header Information ==--
 // Name: <Richie Zhou>
-// Email: <zhou469@wisc.edu>
+// Email: 
 // Team: <AG>
 // TA: <Karan>
 // Lecturer: <Gary Dahl>
-// Notes to Grader: <optional extra notes>
 
 import java.util.Iterator;
 import java.util.LinkedList;
