@@ -4,7 +4,6 @@
 // Team: <AG>
 // TA: <Karan>
 // Lecturer: <Gary Dahl>
-// Notes to Grader: <optional extra notes>
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
