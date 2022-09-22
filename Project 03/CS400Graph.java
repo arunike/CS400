@@ -1,6 +1,6 @@
 // --== CS400 File Header Information ==--
 // Name: <Richie Zhou>
-// Email: <zhou469@wisc.edu>
+// Email:
 // Team: <AG>
 // TA: <Karan>
 // Lecturer: <Gary Dahl>
