@@ -2,5 +2,5 @@
 
 <p> Projects that I did in COMP SCI 400: Programming III. 
 <br>
-Hashtable, Red Black Tree, Dijkstra's Algorithm, and JavaFx
+<b> Hashtable, Red Black Tree, Dijkstra's Algorithm, and JavaFx </b>
 </p>
