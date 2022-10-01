@@ -8,5 +8,5 @@
 <br> 
 <b> Project 03: Dijkstra's Algorithm <b> is an algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks.
 <br>
-<b> JavaFx: a set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms. </b>
+<b> JavaFx: </b> a set of graphics and media packages that enables developers to design, create, test, debug, and deploy rich client applications that operate consistently across diverse platforms.
 </p>
