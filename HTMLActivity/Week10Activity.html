@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>Binary Search Tree</title>
+    <meta name = "Author" content = "Richie Zhou, zhou469@wisc.edu">
+</head>
+
+<body>
+<style>
+    #border {
+        border: solid;
+        padding: 15px;
+        background: lightgrey;
+        background-clip: padding-box;
+    }
+
+    #border1 {
+        border: solid;
+        padding: 15px;
+        background: white;
+        background-clip: padding-box;
+    }
+
+    .button {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f4511e;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px 24px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:re span {
+        padding-right: 25px;
+    }
+
+    .button:re span:after {
+        opacity: 1;
+        right: 0;
+    }
+</style>
+
+<h1>What is the Binary Search Tree</h1>
+
+<div id="border">
+    <h2>Defintion</h2>
+    <div id="border1">
+        <p>Binary Search Tree is also named as an ordered or sorted binary tree,
+            is a rooted binary tree data structure whose internal nodes each store a key greater
+            than all the keys in the node's left subtree and less than those in its right subtree.
+        </p>
+    </div>
+</div>
+
+<br>
+
+<div id="border">
+    <h2>Steps</h2>
+    <div id="border1">
+        <ol start = "1">
+            <li>Read the search element from the user.</li>
+            <li>Compare the search element with the value of root node in the tree.</li>
+            <li>If both are matched, then display "Given node is found" and terminate the function.
+                If both are not matched, then check whether search element is smaller or larger than that node value.</li>
+            <li>If search element is smaller, then continue the search process in left subtree.
+                If search element is larger, then continue the search process in right subtree.</li>
+            <li>Repeat the same until we find the exact element or until the search element is compared with the leaf node</li>
+            <li>If we reach to the node having the value equal to the search value then display "Element is found" and terminate the function.</li>
+            <li>If we reach to the leaf node and if it is also not matched with the search element, then display "Element is not found" and terminate the function.</li>
+        </ol>
+    </div>
+</div>
+
+<br>
+
+<div id = "border">
+    <h2>Picture</h2>
+    <img src = "BSTSearch.png" alt "This is an picture example of the Binary Search Tree" alt="BST" border="2">
+</div>
+
+<br>
+
+
+<h2>Further more information on Binary Search Tree</h2>
+<form method = "get" action = "https://www.geeksforgeeks.org/binary-search-tree-data-structure/">
+    <button class="button" style = "vertical-align:middle"><span>Reference page </span></button>
+</form>
+<a href = "https://www.geeksforgeeks.org/binary-search-tree-data-structure/">More information</a>
+</body>
+</html>

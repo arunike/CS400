@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Custom Page</title>
+    <meta name="author" content="richie">
+    <script>
+        let cgiLocation = "https://pages.cs.wisc.edu/~richie/12.CGIActivity/customScript.cgi";
+        function submitClicked() {
+            let args = "?";
+            args += "name="+document.querySelectorAll("input[type=text]")[0].value;
+            document.querySelectorAll("input[type=radio]:checked").forEach(
+                n => args += "&background=" + n.value );
+            document.querySelectorAll("input[type=checkbox]:checked").forEach(
+                n => args += "&" + n.value + "=true" );
+            window.location.href = cgiLocation + args;
+        }
+    </script>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<h1>Page Customization Options:</h1>
+<ul>
+    <li>User's Name: <input type="text"></li>
+    <li>Background: <ul>
+        <li><input type="radio" name="background" value="Light">Light</li>
+        <li><input type="radio" name="background" value="Dark">Dark</li></ul></li>
+    <li>Contents: <ul>
+        <li><input type="checkbox" value="Greeting">Greeting</li>
+        <li><input type="checkbox" value="Time">Time</li>
+        <li><input type="checkbox" value="SuppressOptions">Suppress Options</li></ul></li>
+    <li><input type="button" value="submit" onclick="submitClicked()"></li>
+</ul>
+</body>
+</html>
