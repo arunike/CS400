@@ -1,9 +1,10 @@
 // --== CS400 Project One File Header ==--
 // Name: <Richie Zhou>
-// Email: 
+// Email: <Zhou469@wisc.edu>
 // Team: <blue>
 // Group: <AG>
 // Lecturer: <Gary Dahl>
+// Notes to Grader: <optional extra notes>
 
 import java.util.NoSuchElementException;
 

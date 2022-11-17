@@ -1,170 +1,174 @@
 // --== CS400 Project One File Header ==--
 // Name: <Richie Zhou>
-// Email: 
+// Email: <Zhou469@wisc.edu>
 // Team: <blue>
 // Group: <AG>
 // Lecturer: <Gary Dahl>
+// Notes to Grader: <optional extra notes>
 
-import java.util.NoSuchElementException;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
-public class HashtableMap <KeyType, ValueType> {
+/**
+ * This class implements a basic Binary Search Tree that supports insert and get operations.
+ * In addition, the implementation supports in-order traversals of the tree.
+ * Each node of the tree stores a key, value pair.
+ * 
+ * @param <KeyType> The key type for this tree. Instances of this type are used to look up key, value pairs in the tree.
+ * @param <ValueType> The value type for this tree. An instance of this type is stored in every node, along with a key.
+ */
+public class HashtableMap<KeyType, ValueType> implements MapADT<KeyType, ValueType> {
 
-    public int capacity;
-    public int num = 0;
-    int i, j;
-    LinkedList<Node>[] map;
+    // This is the protected array that help store lots of lists
+    protected LinkedList<Item<KeyType, ValueType>>[] table;
 
+    /**
+     * This is the constructor of Hashtable
+     * 
+     * @param capacity this is the length of the array to be created
+     */
+    @SuppressWarnings("unchecked")
     public HashtableMap(int capacity) {
-
-        this.capacity = capacity;
-        map = (LinkedList<Node>[]) new LinkedList[capacity];
-        for(i=0; i < capacity; i++)
-            map[i] = new LinkedList<Node>();
-    }
-
-    public HashtableMap() {
-
-        // with default capacity = 20
-        capacity = 20;
-        map= (LinkedList<Node>[]) new LinkedList[20];
-        for(i = 0; i < capacity; i++) {
-            map[i] = new LinkedList<>();
+        table = new LinkedList[capacity];
+        for (int i = 0; i < capacity; i++) {
+            table[i] = new LinkedList<Item<KeyType, ValueType>>();
         }
     }
 
+    public HashtableMap() { // Default constructor
+        this(20);
+    }
+
+    /**
+     * This is the method that put items in the LinkedList
+     * 
+     * @param key   the key of the items
+     * @param value the value of the items
+     * @return true if it successfully put the items in the LinkedList
+     */
+    @Override
     public boolean put(KeyType key, ValueType value) {
-
-        if(key == null) return false; //false if key is null
-        if(this.containsKey(key)) return false; // check existence
-        Node node = new Node(key,value); // create the Node
-        int hashcode = Math.abs(key.hashCode()) % capacity;	//get hashcode
-        map[hashcode].addFirst(node); //add the Node into LinkedList
-        this.num++; //renew the number of pair
-        if((double)num / (double)capacity >= 0.8f) {
-            resize(); //check load factor,
-        }
-        return true;
-    }
-
-    public ValueType get(KeyType key) throws NoSuchElementException {
-
-        if (!this.containsKey(key))
-            throw new NoSuchElementException("NoSuchElement!");
-        //check existence
-        int hashcode = Math.abs(key.hashCode()) % capacity; //get hashcode
-        int size = map[hashcode].size(); //get size of LinkedList
-        for (i = 0; i < size; i++) { //iterate
-            if (map[hashcode].get(i).getKey().equals(key))
-                return (ValueType) map[hashcode].get(i).getValue();
-        }
-        return null;
-    }
-
-    public int size() {
-
-        return this.num;
-    }
-
-    public boolean containsKey(KeyType key) {
-
-        int hashcode=Math.abs(key.hashCode()) % capacity; //get hashcode
-        if(map[hashcode].size() ==0)
-            return false; //if LinkedList is empty
-        int size = map[hashcode].size(); //get size
-        for(i = 0;i < size; i++) {//iterate
-            if(map[hashcode].get(i).getKey().equals(key))
-                return true;
-        }
-        return false;
-    }
-
-    public ValueType remove(KeyType key) {
-
-        int hashcode=Math.abs(key.hashCode()) % capacity; //get hashcode
-        if(!this.containsKey(key)) return null; //check existence
-        ValueType value = this.get(key);
-        int index = 0;
-        int size = map[hashcode].size(); //get size
-        for(i = 0; i < size; i++) { //iterate
-            if(map[hashcode].get(i).getKey().equals(key))
-                break;
-            index++;
-        }
-        map[hashcode].remove(index); //remove
-        num--; //renew the number
-        return value;
-
-    }
-
-    public void clear() {
-
-        num = 0; //renew number
-        for(i = 0; i < capacity; i++) {
-            map[i].clear(); //renew LinkedList
+        if (key == null || containsKey(key)) {
+            return false;
+        } else {
+            table[code(key)].add(new Item<KeyType, ValueType>(key, value));
+            if ((1.0 * size()) / table.length >= 0.75) {
+                grow();
+            }
+            return true;
         }
     }
 
-    public void resize() {
+    // Private helper method that help the HashTable to grow dynamically
+    @SuppressWarnings("unchecked")
+    private void grow() { 
+        LinkedList<Item<KeyType, ValueType>>[] old = table; // Store the old table
+        table = new LinkedList[table.length * 2]; // Create a new table
 
-        Node[] list = new Node[num]; //save all Node
-        int index = 0;
-        for(i = 0; i < capacity; i++) {
-            for(j = 0; j < map[i].size(); j++) {
-                list[index] = map[i].get(j);
-                index++;
+        for (int t = 0; t < table.length; t++) {
+            table[t] = new LinkedList<Item<KeyType, ValueType>>();
+        }
+        for (int i = 0; i < old.length; i++) { // Loop through the old table
+            for (int j = 0; j < old[i].size(); j++) { // Loop through the LinkedList
+                put(old[i].get(j).getKey(), old[i].get(j).getValue());
             }
         }
+    }
 
-        capacity = capacity * 2; //double capacity
-        num = 0; //renew number
-        map= (LinkedList<Node>[]) new LinkedList[capacity];
-        for(i = 0; i < capacity; i++) {
-            map[i] = new LinkedList<>();
+    /**
+     * This is the method that get the value of an item that has the given key
+     * 
+     * @param key this is the key that we are searching by
+     * @return the Value of the items that has the given key with ValueType
+     * @throws NoSuchElementException if there is no element with the given key in the table
+     */
+    @Override
+    public ValueType get(KeyType key) throws NoSuchElementException {
+        int a = code(key);
+        for (int i = 0; i < table[a].size(); i++) {
+            if (table[a].get(i).getKey().equals(key)) {
+                return table[a].get(i).getValue();
+            }
         }
-        //initialize map and LinkedList
-        i = 0;
-    }
-}
-
-class Node <KeyType,ValueType> {
-
-    private KeyType key;
-    private ValueType value;
-
-    public Node(KeyType key, ValueType value) {
-
-        this.key=key;
-        this.value=value;
+        throw new NoSuchElementException("There is no element with that key in the table");
     }
 
-    public Node(KeyType key) {
-
-        this.key=key;
+    /**
+     * This is the method that get the number of items stored in the table
+     * 
+     * @return the number of all the items in the table in type int
+     */
+    @Override
+    public int size() {
+        int a = 0;
+        // use the size() method of LinkedList to calculate the total number of the Hash table
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] != null)
+                a += table[i].size();
+        }
+        return a;
     }
 
-    public void setKey(KeyType key) {
-
-        this.key=key;
+    /**
+     * This is the method that check whether there is an item with the given key
+     * 
+     * @param key the key to search by, this can help find the item
+     * @return true if that item exist false otherwise
+     */
+    @Override
+    public boolean containsKey(KeyType key) {
+        boolean found = false;
+        // first find the LinkedList that correspond to the hash code the same with that key
+        for (int i = 0; i < table[code(key)].size(); i++) {
+            // check each item in the list
+            if (key.equals(table[code(key)].get(i).getKey())) {
+                found = true;
+                break;
+            }
+        }
+        return found;
     }
 
-    public void setValue(ValueType value) {
-
-        this.value=value;
+    /**
+     * This is the method that help remove the item with the given key and return the value of that
+     * item
+     * 
+     * @param key the key of the to be removed item
+     * @return the value of the item that we are going to remove
+     */
+    @Override
+    public ValueType remove(KeyType key) {
+        // if the item with the given key doesn't exist catch the exception throw by get() and
+        // return null
+        try {
+            ValueType temp = get(key);
+            // search the LinkedList correspond to the key
+            for (int i = 0; i < table[code(key)].size(); i++) {
+                if (key.equals(table[code(key)].get(i).getKey())) {
+                    table[code(key)].remove(i);
+                    break;
+                }
+            }
+            return temp;
+        } catch (NoSuchElementException nsee) {
+            return null;
+        }
     }
 
-    public KeyType getKey() {
-
-        return this.key;
+    @Override
+    public void clear() { // Clear the table
+        for (int i = 0; i < table.length; i++) { // Loop through the table
+            table[i].clear();
+        }
     }
 
-    public ValueType getValue() {
-
-        return this.value;
-    }
-
-    public boolean equals(Node n) {
-
-        return this.getKey().equals(n.getKey());
+    /**
+     * This helper method help calculate the code of key
+     * 
+     * @param key the key of the item
+     * @return a code
+     */
+    private int code(KeyType key) {
+        return Math.abs(key.hashCode()) % table.length;
     }
 }
