@@ -1,5 +1,6 @@
 # COMPSCI400
 
+## Description
 <p> Projects that I did in COMP SCI 400: Programming III. 
   <br>
   <li> <b> Project 01: HashTable </b> is a data structure that implements an associative array or dictionary. It is an abstract data type that maps keys to values </li>
